@@ -12,7 +12,7 @@ namespace MicrowaveOven.Test.Integration
 {
     
     //---------------------NB-----------------------------
-    //(1) PowerTube set as IT1 as hardware dependency implies bottom up strategy and PowerTube relies on hardware/(power)
+    //(1) Display set as IT2 as class/module is parallel to PowereTube in dependency tree and uses bottom most module Output
     //(2) Remember BLACKBOX perspective!
     //(3) Top module(powertube) has no return values => testing solely on no throws and correct output
     //(4) Testing on output is partly whitebox testing since output cannot be known simply be PowerTube's perspective
@@ -86,11 +86,11 @@ namespace MicrowaveOven.Test.Integration
         }
 
 
-        [TestCase(10)]
+        [Test]
         //Testing for no throws on Clear()
-        public void Clear__NoThrow(int power)
+        public void Clear__NoThrow()
         {
-            Assert.That(() => display_TM.ShowPower(power), Throws.Nothing);
+            Assert.That(() => display_TM.Clear(), Throws.Nothing);
         }
     }
 }

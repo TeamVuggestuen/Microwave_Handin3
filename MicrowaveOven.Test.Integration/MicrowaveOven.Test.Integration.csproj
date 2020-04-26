@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="IT2_Display.cs" />
     <Compile Include="IT1_PowerTube.cs" />
+    <Compile Include="IT3_Light.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
