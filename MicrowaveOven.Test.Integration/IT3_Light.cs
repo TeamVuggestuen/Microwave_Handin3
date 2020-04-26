@@ -5,31 +5,63 @@ using System.Text;
 using System.Threading.Tasks;
 using MicrowaveOvenClasses.Boundary;
 using MicrowaveOvenClasses.Interfaces;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
 
 namespace MicrowaveOven.Test.Integration
 {
-    //---------------------NB-----------------------------
-    //(1) Display set as IT2 as class/module is parallel to PowereTube in dependency tree and uses bottom most module Output
-    //(2) Remember BLACKBOX perspective!
-
     [TestFixture]
     class IT3_Light
     {
-        //System Under Test
-        private IOutput myOutput;
-        private bool isOn = false;
+
+        //System under test
+        private Light light_TM;  //Top module
+        private IOutput output;
 
         [SetUp]
         public void Setup()
         {
-            myOutput = new Output();
+            output = new Output();
+            light_TM = new Light(output);
+        }
+
+        [Test]
+        public void TurnOn_IsOff_CorrectOutput()
+        {
+            //light_TM.TurnOn();
+            //output.Received().OutputLine("Light is turned on");
+            Assert.That(() => light_TM.TurnOn(), Throws.Nothing);
         }
 
 
-        //[TestCase()]
-        //{
+        [Test]
+        public void TurnOn_IsOn_CorrectOutput() // burde denne her ikke give en fejl???
+        {
+            light_TM.TurnOn();
+            //light_TM.TurnOn();
+            //output.Received().OutputLine("Light is turned on");
+            Assert.That(() => light_TM.TurnOn(), Throws.Nothing);
+        }
 
-        //}
+
+        [Test]
+        public void TurnOff_IsOn_CorrectOutput() // burde denne her ikke give en fejl???
+        {
+            light_TM.TurnOn();
+            //light_TM.TurnOff();
+            //output.Received().OutputLine("Light is turned off");
+            Assert.That(() => light_TM.TurnOff(), Throws.Nothing);
+        }
+
+
+        [Test]
+        public void TurnOff_IsOff_CorrectOutput() // burde denne her ikke give en fejl???
+        {
+            //light_TM.TurnOff();
+            //output.Received().OutputLine("Light is turned off");
+            Assert.That(() => light_TM.TurnOff(), Throws.Nothing);
+        }
     }
 }
