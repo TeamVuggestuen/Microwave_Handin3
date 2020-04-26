@@ -68,7 +68,7 @@ namespace MicrowaveOven.Test.Integration
         public void TurnOff_WasOff_CorrectOutput()
         {
             powertubeTM.TurnOff();
-            output.Received(1).OutputLine(($"PowerTube turned off")));
+            output.Received(1).OutputLine(($"PowerTube turned off"));
         }
     }
 }
