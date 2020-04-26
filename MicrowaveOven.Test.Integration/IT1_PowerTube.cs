@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace MicrowaveOven.Test.Integration
 {
     [TestFixture]
-    public class IT_1PowerTube
+    public class IT1_PowerTube
     {
         //NB
         //(1) PowerTube set as IT1 as hardware dependency implies bottom up strategy and PowerTube relies on hardware/(power)
@@ -68,7 +68,7 @@ namespace MicrowaveOven.Test.Integration
         public void TurnOff_WasOff_CorrectOutput()
         {
             powertubeTM.TurnOff();
-            output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"PowerTube turned off")));
+            output.Received(1).OutputLine(($"PowerTube turned off")));
         }
     }
 }

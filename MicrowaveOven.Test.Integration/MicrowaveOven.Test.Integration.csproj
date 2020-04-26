@@ -57,7 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IT_1PowerTube.cs" />
+    <Compile Include="IT2_Display.cs" />
+    <Compile Include="IT1_PowerTube.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
