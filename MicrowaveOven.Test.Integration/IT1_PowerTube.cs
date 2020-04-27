@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace MicrowaveOven.Test.Integration
         //System under test
         private PowerTube powertubeTM; //TM = Top module
         private IOutput output;
+        private StringWriter consoleOut;
+
 
 
         [SetUp]
@@ -33,21 +36,42 @@ namespace MicrowaveOven.Test.Integration
         {
             output = new Output();
             powertubeTM = new PowerTube(output);
+            consoleOut = new StringWriter();
         }
 
 
-        //[Test]
+        //------------------ PowerTube & Output ---------------------
+        //NB:
+        //(1)Whitebox system under test perspective:
+        //(2)Integrating PowerTube & Output => cannot be substituted
+        //(3)Therefore only possible to check methods by console output
+        //(4)Not sure if output string is known in blackbox testing
 
-        ////Legal interval betwen: 1-100
-        //public void TurnOn_WasOffCorrectPower_CorrectOutput()
-        //{
-        //    //String should only be output once (received(1)), since second value is out of legal interval
-        //    powertubeTM.TurnOn(50);
+        //Legal interval betwen: 1-100
+        [TestCase(1)]
+        [TestCase(100)]
+        public void TurnOn_WasOffCorrectPower_CorrectOutput(int power)
+        {
+            Console.SetOut(consoleOut);
+            powertubeTM.TurnOn(power);
+            Assert.That(consoleOut.ToString().Length > 0);
+                //Equals($"PowerTube works with {power}\r\n"));
+        }
 
-        //    output.Received(1).OutputLine(Arg.Is<string>(str => str.Contains($"{50}"))); 
-        //}
+        
+        [Test]
+        public void TurnOff_WasOn_CorrectOutput()
+        {
+            powertubeTM.TurnOn(50); //unless powertube IsOn=true; no action/output on TurnOff() 
+            
+            Console.SetOut(consoleOut);
+            powertubeTM.TurnOff();
+            Assert.That(consoleOut.ToString().Length > 0);
+            //Equals($"PowerTube turned off"));
+        }
 
 
+        // ALTERNATIVE: test for no throws
         [Test]
         //Testing for no exceptions thrown with legal interval value
         public void TurnOn_WasOffCorrectpower_NoThrows()
@@ -55,21 +79,37 @@ namespace MicrowaveOven.Test.Integration
             Assert.That(() => powertubeTM.TurnOn(50), Throws.Nothing);
         }
 
-
         [Test]
         //Testing for no throws on TurnOff()
-        public void TurnOff_WasOff_NoOutput()
+        public void TurnOff_WasOn_NoThrows()
         {
+            powertubeTM.TurnOn(50); //unless powertube IsOn=true; no action/output on TurnOff() 
+
             Assert.That(() => powertubeTM.TurnOff(), Throws.Nothing);
         }
 
 
-        ////Or (while also testing output):
-        //[Test]
-        //public void TurnOff_WasOff_CorrectOutput()
-        //{
-        //    powertubeTM.TurnOff();
-        //    output.Received(1).OutputLine($"PowerTube turned off");
-        //}
+        //------------------ PowerTube & ArgumentOutOfRangeException ---------------------
+        //Testing for PowerTube & ArgumentOutOfRangeException
+        //Legal interval betwen: 1-100
+        [TestCase(0)]
+        [TestCase(200)]
+        public void TurnOn_WasOffIncorrectPower_ThrowsException(int power)
+        {
+            powertubeTM.TurnOn(50);
+            Assert.That(() => powertubeTM.TurnOn(power), Throws.Exception);
+        }
+
+
+        //------------------ PowerTube & ApplicationException ---------------------
+        //Testing for PowerTube & ApplicationException
+        //Legal interval betwen: 1-100
+        [Test]
+        public void TurnOn_WasOn_ThrowsException()
+        {
+            powertubeTM.TurnOn(50);
+            Assert.That(() => powertubeTM.TurnOn(75), Throws.Exception);
+        }
+
     }
 }
