@@ -18,7 +18,9 @@ namespace MicrowaveOven.Test.Integration
         //(1) PowerTube set as IT1 as hardware dependency implies bottom up strategy and PowerTube relies on hardware/(power) and uses bottom most module Output
         //(2) Remember BLACKBOX perspective!
         //(3) Interval (EET) & exceptions/throws already tested in UT
-        //(4) Top module(powertube) has no return values => testing solely on no throws and correct output
+        //(4) Top module(powertube)neither Output has return values => testing solely on no throws and correct console output
+        //    => adding private StringWriter consoleOut;
+
         //(5) Testing on output is partly whitebox testing since output cannot be known simply be PowerTube's perspective
         //    However it is included here to test class Output simultaneously as this is (understandably so) not included in UT
         //    Otherwise test would be restricted to testing for throws

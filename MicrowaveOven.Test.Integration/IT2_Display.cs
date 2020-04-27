@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,13 +11,13 @@ using NUnit.Framework;
 
 namespace MicrowaveOven.Test.Integration
 {
-    
+
     //---------------------NB-----------------------------
     //(1) Display set as IT2 as class/module is parallel to PowereTube in dependency tree and uses bottom most module Output
     //(2) Remember BLACKBOX perspective!
-    //(3) Top module(powertube) has no return values => testing solely on no throws and correct output
+    //(3) From whitebox system perspective: Top module(Display) neither Output has return values => testing solely on no throws and correct output
     //(4) Testing on output is partly whitebox testing since output cannot be known simply be PowerTube's perspective
-    //    However it is included here to test class Output simultaneously as this is (understandably so) not included in UT
+    //    => adding private StringWriter consoleOut;
     //    Otherwise test would be restricted to testing for throws
 
 
@@ -26,24 +27,33 @@ namespace MicrowaveOven.Test.Integration
         //System Under Test
         private Display display_TM;  //Top module
         private IOutput output;
+        private StringWriter consoleOut;
+
 
         [SetUp]
         public void Setup()
         {
             output = new Output();
             display_TM = new Display(output);
+            consoleOut = new StringWriter();
         }
 
-        //-----------------Testing for correct output on function calls (Whitebox)------------------------------
-        //already covered in UT but only on output as substitute
+        //------------------ Display & Output ---------------------
+        //NB:
+        //(1)Whitebox system under test perspective:
+        //(2)Integrating Display & Output => cannot be substituted
+        //(3)Therefore only possible to check methods by console output
+        //(4)Not sure if output string is known in blackbox testing
+        //(5)already covered in UT but only on output as substitute
+
         [TestCase(10,10)]
         [TestCase(0, 0)]
         public void ShowTime_MinutesSeconds_CorrectOutput(int min, int sec)
         {
-            //WHiTEBOX (known output)!
-            //string should be output twice
+            Console.SetOut(consoleOut);
             display_TM.ShowTime(min, sec);
-            output.Received(2).OutputLine($"Display shows{min:D2}:{sec:D2}"); 
+            Assert.That(consoleOut.ToString().Length > 0);
+            //Equals($"Display shows{min:D2}:{sec:D2"));
         }
 
 
@@ -51,25 +61,24 @@ namespace MicrowaveOven.Test.Integration
         [TestCase(0)]
         public void ShowPower_Power_CorrectOutput(int power)
         {
-            //WHITEBOX (known output)!
-            //string should be output twice
+            Console.SetOut(consoleOut);
             display_TM.ShowPower(power);
-            output.Received(2).OutputLine($"Display shows: {power}");
+            Assert.That(consoleOut.ToString().Length > 0);
+            //Equals($"Display shows: {power}"));
         }
 
         [TestCase]
         public void Clear_CorrectOutput()
         {
-            //WHITEBOX (known output)!
-            //string should be output once
+            Console.SetOut(consoleOut);
             display_TM.Clear();
-            output.Received(1).OutputLine($"Display cleared");
+            Assert.That(consoleOut.ToString().Length > 0);
+            //Equals($"Display cleared"));
         }
 
 
-
+        //----------------------------ALTERNATIVE------------------------------------
         //------------------Testing for no throws on function calls (Blackbox)----------------------------
-        //however upon system perspective we do know that class Display does not contain exceptions
         [TestCase(1,2)]
         //Testing for no throws on ShowTime()
         public void ShowTime__NoThrow(int min, int sec)
