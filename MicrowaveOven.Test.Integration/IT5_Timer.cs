@@ -27,8 +27,7 @@ namespace MicrowaveOven.Test.Integration
         public void Setup()
         {
             output = Substitute.For<IOutput>();
-            ui = Substitute
-                .For<IUserInterface>(); // Skal vi lave en substitute, eller skal vi substitue alle UI parametre
+            ui = Substitute.For<IUserInterface>(); // Skal vi lave en substitute, eller skal vi substitue alle UI parametre
             timer_TM = new Timer();
             display = new Display(output);
             powerTube = new PowerTube(output);
