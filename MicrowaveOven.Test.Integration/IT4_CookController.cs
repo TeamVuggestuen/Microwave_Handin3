@@ -55,19 +55,7 @@ namespace MicrowaveOven.Test.Integration
 
 
         [Test]
-        public void Cooking_TimerTick_DisplayShow123()
-        {
-            cookController.StartCooking(50, 60);
-
-            timer.TimeRemaining.Returns(10);
-            timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
-
-            output.Received().OutputLine($"Display shows: {10 / 60:D2}:{10 % 60:D2}");
-        }
-
-
-        [Test]
-        public void Cooking_TimerExpired_PowerTubeOff()
+        public void Cooking_TimerExpired_DisplayTurnedOff()
         {
             cookController.StartCooking(50, 60);
 
