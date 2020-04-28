@@ -9,6 +9,7 @@ namespace Microwave.Test.Unit
     [TestFixture]
     public class PowerTubeTest
     {
+        
         private PowerTube uut;
         private IOutput output;
 

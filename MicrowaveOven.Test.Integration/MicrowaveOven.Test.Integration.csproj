@@ -5,13 +5,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7BAF14CD-392B-46DF-AF35-050C72E49C8E}</ProjectGuid>
+    <ProjectGuid>{291641F7-343E-4854-A848-FADDA9EF42FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MicrowaveOven.Test.Integration</RootNamespace>
     <AssemblyName>MicrowaveOven.Test.Integration</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -59,22 +60,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IT1_PowerTubeOutput.cs" />
-    <Compile Include="IT2_DisplayOutput.cs" />
-    <Compile Include="IT3_LightOutput.cs" />
-    <Compile Include="IT4_CookController.cs" />
-    <Compile Include="IT5_TimerCookController.cs" />
-    <Compile Include="IT6_UserInterface.cs" />
+    <Compile Include="IT2_Display.cs" />
+    <Compile Include="IT1_PowerTube.cs" />
+    <Compile Include="IT3_Light.cs" />
+    <Compile Include="IT5_Timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Microwave.Test.Unit\Microwave.Test.Unit.csproj">
+      <Project>{2b2735ba-ef0a-42c4-8457-25786acf90d9}</Project>
+      <Name>Microwave.Test.Unit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicrowaveOvenClasses\MicrowaveOvenClasses.csproj">
       <Project>{2b04da6b-afe9-4548-aa05-84d806ba0fa4}</Project>
       <Name>MicrowaveOvenClasses</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
