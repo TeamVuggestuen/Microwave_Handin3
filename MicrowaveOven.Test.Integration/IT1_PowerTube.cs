@@ -103,7 +103,7 @@ namespace MicrowaveOven.Test.Integration
         }
 
 
-        //------------------ PowerTube & ApplicationException ---------------------
+        //------------------ PowerTube & ApplicationException ----------------------------
         //Testing for PowerTube & ApplicationException
         //Legal interval betwen: 1-100
         [Test]
