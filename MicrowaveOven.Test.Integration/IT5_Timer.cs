@@ -16,6 +16,7 @@ namespace MicrowaveOven.Test.Integration
     [TestFixture]
     class IT5_Timer
     {
+        //System Under Test
         private ITimer timer_TM;
         private IDisplay display;
         private IPowerTube powerTube;
@@ -27,7 +28,7 @@ namespace MicrowaveOven.Test.Integration
         public void Setup()
         {
             output = Substitute.For<IOutput>();
-            ui = Substitute.For<IUserInterface>(); // Skal vi lave en substitute, eller skal vi substitue alle UI parametre
+            ui = Substitute.For<IUserInterface>(); 
             timer_TM = new Timer();
             display = new Display(output);
             powerTube = new PowerTube(output);
@@ -36,7 +37,7 @@ namespace MicrowaveOven.Test.Integration
 
         }
         //BlackBox
-        //
+        
 
         //Testing for no throws on ShowTime()
         [Test]
@@ -46,17 +47,25 @@ namespace MicrowaveOven.Test.Integration
         }
 
         [Test]
-        public void TimerExpired_displayOutput()
+        public void Stop__NoThrow()
+        {
+            Assert.That(() => timer_TM.Stop(), Throws.Nothing);
+        }
+
+
+        [Test]
+        public void TimerExpired_PowerTube_CorrectOutputDisplay()
         {
             cookController.StartCooking(50, 3);
 
             Thread.Sleep(3050);
+            
             output.Received().OutputLine($"PowerTube turned off");
 
         }
 
         [Test]
-        public void Cooking_TimerExpired_DisplayCorrect()
+        public void TimerExpired_Timer_CorrectOutputDisplay()
         {
             cookController.StartCooking(50, 3);
 
@@ -66,13 +75,13 @@ namespace MicrowaveOven.Test.Integration
         }
 
         [Test]
-        public void Cooking_TimerRunning_DisplayCorrect()
+        public void TimerRunning_CorrectOutputDisplay()
         {
             
             cookController.StartCooking(50, 10);
 
             Thread.Sleep(1100);
-
+           
             output.Received().OutputLine($"Display shows: {9 / 60:D2}:{9 % 60:D2}");
 
         }

@@ -14,6 +14,7 @@ namespace MicrowaveOven.Test.Integration
 {
     class IT4_CookController
     {
+        //System Under Test
         private CookController cookController;
 
         private IUserInterface ui;
@@ -34,38 +35,44 @@ namespace MicrowaveOven.Test.Integration
         }
 
         [Test]
-        public void StartCooking_UnvalidParameters_Throw_exception()
+        public void StartCooking_ValidParameters_Throw_exception()
         {
             
             Assert.That(() => cookController.StartCooking(350, 60), Throws.Nothing);
             
         }
 
+        [Test]
+        public void StartCooking_InvalidParameters_Throw_exception()
+        {
+
+            Assert.That(() => cookController.StartCooking(750, 60), Throws.Exception);
+
+        }
 
         [Test]
-        public void Cooking_TimerTick_DisplayShow()
+        public void StartCooking_PowerTube_TurnOn_CorrectOutputDisplay()
         {
             cookController.StartCooking(50, 60);
 
-            timer.TimeRemaining.Returns(10);
-            timer.TimerTick += Raise.EventWith(this, EventArgs.Empty);
+            output.Received().OutputLine($"PowerTube works with 50");
 
-            output.Received().OutputLine($"Display shows: {10 / 60:D2}:{10 % 60:D2}");
         }
 
 
         [Test]
-        public void Cooking_TimerExpired_DisplayTurnedOff()
+        public void StartCooking_PowerTube_TurnOff_TimerExpired_CorrectOutputDisplay()
         {
-            cookController.StartCooking(50, 60);
+            cookController.StartCooking(50, 6);
 
             timer.Expired += Raise.EventWith(this, EventArgs.Empty);
-
+            
             output.Received().OutputLine($"PowerTube turned off");
+            
         }
 
         [Test]
-        public void Cooking_Stop_PowerTubeOff()
+        public void Stop_PowerTubeOff_CorrectOutputDisplay()
         {
             cookController.StartCooking(50, 60);
             cookController.Stop();
