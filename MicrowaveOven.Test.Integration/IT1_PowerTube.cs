@@ -49,7 +49,7 @@ namespace MicrowaveOven.Test.Integration
         //(3)Therefore only possible to check methods by console output
         //(4)Not sure if output string is known in blackbox testing
 
-        //Legal interval betwen: 1-100
+        //Legal interval betwen: 50-700
         [TestCase(50)]
         [TestCase(700)]
         public void TurnOn_WasOffCorrectPower_CorrectOutput(int power)

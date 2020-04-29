@@ -60,7 +60,7 @@ namespace MicrowaveOven.Test.Integration
         {
             cookController.StartCooking(50, 3);
 
-            Thread.Sleep(3000);
+            Thread.Sleep(3100);
 
             output.Received().OutputLine($"Display shows: {0 / 60:D2}:{0 % 60:D2}");
         }
