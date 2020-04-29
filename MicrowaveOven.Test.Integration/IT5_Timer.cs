@@ -58,9 +58,9 @@ namespace MicrowaveOven.Test.Integration
         [Test]
         public void Cooking_TimerExpired_DisplayCorrect()
         {
-            cookController.StartCooking(50, 3000);
+            cookController.StartCooking(50, 3);
 
-            Thread.Sleep(3100);
+            Thread.Sleep(3000);
 
             output.Received().OutputLine($"Display shows: {0 / 60:D2}:{0 % 60:D2}");
         }
@@ -69,11 +69,11 @@ namespace MicrowaveOven.Test.Integration
         public void Cooking_TimerRunning_DisplayCorrect()
         {
             
-            cookController.StartCooking(50, 2000);
+            cookController.StartCooking(50, 2);
 
             Thread.Sleep(1000);
 
-            output.Received().OutputLine($"Display shows: {1000 / 60:D2}:{1000 % 60:D2}");
+            output.Received().OutputLine($"Display shows: {1 / 60:D2}:{1 % 60:D2}");
 
         }
 
