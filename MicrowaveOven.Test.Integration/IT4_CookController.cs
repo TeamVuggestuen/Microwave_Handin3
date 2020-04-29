@@ -37,7 +37,7 @@ namespace MicrowaveOven.Test.Integration
         public void StartCooking_UnvalidParameters_Throw_exception()
         {
             
-            Assert.That(() => cookController.StartCooking(350, 60), Throws.Exception);
+            Assert.That(() => cookController.StartCooking(350, 60), Throws.Nothing);
             
         }
 

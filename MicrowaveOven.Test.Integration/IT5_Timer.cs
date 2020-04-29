@@ -69,11 +69,11 @@ namespace MicrowaveOven.Test.Integration
         public void Cooking_TimerRunning_DisplayCorrect()
         {
             
-            cookController.StartCooking(50, 2);
+            cookController.StartCooking(50, 10);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(1100);
 
-            output.Received().OutputLine($"Display shows: {1 / 60:D2}:{1 % 60:D2}");
+            output.Received().OutputLine($"Display shows: {9 / 60:D2}:{9 % 60:D2}");
 
         }
 

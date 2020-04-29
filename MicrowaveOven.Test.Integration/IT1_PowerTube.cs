@@ -50,8 +50,8 @@ namespace MicrowaveOven.Test.Integration
         //(4)Not sure if output string is known in blackbox testing
 
         //Legal interval betwen: 1-100
-        [TestCase(1)]
-        [TestCase(100)]
+        [TestCase(50)]
+        [TestCase(700)]
         public void TurnOn_WasOffCorrectPower_CorrectOutput(int power)
         {
             Console.SetOut(consoleOut);
@@ -93,19 +93,18 @@ namespace MicrowaveOven.Test.Integration
 
         //------------------ PowerTube & ArgumentOutOfRangeException ---------------------
         //Testing for PowerTube & ArgumentOutOfRangeException
-        //Legal interval betwen: 1-100
+        //Legal interval betwen: 50-700
         [TestCase(0)]
-        [TestCase(200)]
+        [TestCase(800)]
         public void TurnOn_WasOffIncorrectPower_ThrowsException(int power)
         {
-            powertubeTM.TurnOn(50);
             Assert.That(() => powertubeTM.TurnOn(power), Throws.Exception);
         }
 
 
         //------------------ PowerTube & ApplicationException ----------------------------
         //Testing for PowerTube & ApplicationException
-        //Legal interval betwen: 1-100
+        //Legal interval betwen: 50-700
         [Test]
         public void TurnOn_WasOn_ThrowsException()
         {
